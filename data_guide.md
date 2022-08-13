@@ -1,11 +1,11 @@
-# DATA SOURCE:
+# Data source
 
 I wanted to use the data from NASA's "POWER" project https://power.larc.nasa.gov/  
 The dataset they use for meteorology is GMAO's "MERRA 2" https://disc.gsfc.nasa.gov/datasets/M2SDNXSLV_5.12.4/summary  
 I used NASA's data's access protocol "OPeNDAP" to retrieved the data as URLs https://opendap.github.io/documentation/QuickStart.html  
 I will base my explanation on this very last link (OPeNDAP quickstart guide), so be sure to check it out for further explanation.
 
-# HOW DOES THE URLs WORK
+# How does the URL work
 
 After retrieving the data from MERRA 2 through OPeNDAP, I ended up with a list of URLs (one per day).  
 Here is how one URL looks like (in this example, for the date 01/01/1980):  
@@ -21,7 +21,7 @@ Now, to access the response of the data, we'll use the extension ".ascii".
 For example, ".ascii?att1" shows the full response of att1.  
 And to extract a part of the data, use the template "?att1[0][0][0]" with the correct number of dimensions.  
 
-# EXAMPLE TO RETRIEVE THE DATA
+# Example to retrieve the data
 
 Let's say we want the average temperature for Paris (still on the 01/01/1980).  
 The attribute that contains the average temperature is T2MMEAN.  
@@ -31,9 +31,7 @@ To know what to put in "lat" and "lon", we have to retrieve the values in the AT
 A google search tells me that Paris's coordinates are 49 for lat and 2.5 for lon.  
 Now, we need to know where these numbers are located in the attributes lat and lon.  
 By showing the whole response of lat and lon (".ascii?lat,lon"), we can see that lat starts at -90 and increments by 0.5, and lon starts at -180 and increments by 0,625  
-With a little bit of maths: lat[(49-(-90))/0.5] and lon[(2,5-(-180))/0.625]  
-                           =lat[278]                lon[292]  
-    , we found the location of the desired coordinates in the dataset.  
+With a little bit of maths: lat[(49-(-90))/0.5] and lon[(2,5-(-180))/0.625] = lat[278] and lon[292], we found the location of the desired coordinates in the dataset.  
 Indeed ".ascii?lat[278],lon[292]" returns 49 and 2.5  
 Now that we know what location to look in, we can append ".ascii?T2MMEAN[0][278][292]" and learn that the average temperature in Paris on the 01/01/1980 was 272.177 Kelvin, so -1°C.  
 Et voilà !  
