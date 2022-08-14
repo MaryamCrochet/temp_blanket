@@ -1,0 +1,7 @@
+/* rectangle to test the color picker */
+.rectangle-test {
+    width: 90vw;
+    height: 40vh;
+    margin-bottom: 10px;
+    background-color:#9D9595;
+}
